@@ -1,18 +1,4 @@
 <?php 
-#holanda!
-#chao
-error_reporting(E_ALL ^ E_NOTICE);
-ini_set('display_errors',1);
-
-/*
-include_once('../mustacho.php');
-$mustacho = new Mustacho;*/
-
-
-
-
-
-
 
 class Tabla1 extends ModeloPadre{
 	public function __construct(){
@@ -34,8 +20,3 @@ class Tabla1Admin extends AdminPadre{
 		parent::__construct();
 	}
 }
-
-
-$a = new Tabla1Admin();
-#$a->getGrid();
-$a->getForm();
