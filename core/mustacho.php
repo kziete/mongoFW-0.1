@@ -17,5 +17,3 @@ class Mustacho{
 		);
 	}
 }
-
-$mustacho = new Mustacho();

@@ -38,7 +38,7 @@ class AdminPadre{
 		$output = array(
 			'campos' => $camposHtml
 		);
-		echo $this->mustacho->render('genericos/form.html',$output);
+		$this->mustacho->render('genericos/form.html',$output);
 	}
 
 	public function getGrid(){
@@ -55,7 +55,7 @@ class AdminPadre{
 			'datos' => $ordenado
 		);
 
-		echo $this->mustacho->render('genericos/grid.html',$output);
+		$this->mustacho->render('genericos/grid.html',$output);
 	}
 	
 	public function saveOk(){

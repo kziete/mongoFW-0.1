@@ -20,3 +20,5 @@ class Tabla1Admin extends AdminPadre{
 		parent::__construct();
 	}
 }
+
+$registradas = array('Tabla1Admin','dummy');
