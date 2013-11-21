@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-
-<table>
+<table class="table">
 	<tr>
+		<th></th>
 		{{#cabecera}}
 			<th>{{.}}</th>
 		{{/cabecera}}
 	</tr>
 	{{#datos}}
 	<tr>
-		{{#.}}
+		<td>
+			<a href="{{edit}}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
+		</td>
+		{{#outputs}}
 			<td>{{.}}</td>
-		{{/.}}
+		{{/outputs}}
 	</tr>
 	{{/datos}}
 </table>
-
-</body>
-</html>

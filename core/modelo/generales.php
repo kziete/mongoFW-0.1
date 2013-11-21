@@ -7,66 +7,101 @@ class Modelos{
 	public static function text($hash=null){
 		return new TextModel($hash);
 	}
+	public static function file($hash=null){
+		return new FileModel($hash);
+	}
 }
 
 
 class AdminPadre{
-
+	protected $adminName;
+	protected $mustacho;
+	protected $model;
+	
 	public function __construct(){		
 		global $mustacho;
 		$this->mustacho = $mustacho;
-
+		$this->adminName = get_class($this);
 		$this->model = new $this->modelName;
 	}
-	public function getForm(){
+	public function getForm($index){
 		if($_POST['aceptar']){
 			unset($_POST['aceptar']);
-			$errores = $this->model->saveData($_POST);
+			if($index != -1)
+				$_POST['id'] = $index;
+
+			$grabar = $this->prepararDatos($_POST);
+			$errores = $this->model->saveData($grabar);
 			if(!$errores)
 				$this->saveOk();
 		}
+		if($index != -1){
+			$data =  $this->model->getById($index);
+			if(!$data)
+				echo 'Sacame de Aca';
+		}
+		
 		
 		$camposHtml = array();
-		foreach ($this->campos as $campo) {
+		foreach ($this->model as $k => $v) {
+			$camposHtml[] = array(
+				'nombre' => $k,
+				'input' => $v->getInput($k,$data[$k])
+			);
+		}
+		/*foreach ($this->campos as $campo) {
 			if($this->model->{$campo}->getInput()){
 				$camposHtml[] = array(
 					'nombre' => $campo,
-					'input' => $this->model->{$campo}->getInput($campo)
+					'input' => $this->model->{$campo}->getInput($campo,$data[$campo])
 				);
 			}				
-		}
+		}*/
 		$output = array(
 			'campos' => $camposHtml
 		);
-		$this->mustacho->render('genericos/form.html',$output);
+		return $this->mustacho->render('genericos/form.html',$output);
 	}
 
 	public function getGrid(){
 		$data = $this->model->getRows();
 		$ordenado = array();
 		foreach ($data as $k => $fila) {
-			foreach ($this->campos as $campo) {
-				$ordenado[$k][] = $this->model->{$campo}->getOutput($fila[$campo]);
+			$ordenado[$k]['edit'] = '/admin/autoadmin.php?modelo=' . $this->adminName . '&index=' . $fila['id'];
+			foreach ($this->mostrar as $campo) {
+				$ordenado[$k]['outputs'][] = $this->model->{$campo}->getOutput($fila[$campo]);
 			}
 		}
 
 		$output = array(
-			'cabecera' => $this->campos,
+			'cabecera' => $this->mostrar,
 			'datos' => $ordenado
 		);
-
-		$this->mustacho->render('genericos/grid.html',$output);
+		return $this->mustacho->render('genericos/grid.html',$output);
 	}
 	
 	public function saveOk(){
-		echo 'saveOk';
+		header("Location: /admin/autoadmin.php?modelo=" . $this->adminName);
+	}
+
+	public function prepararDatos($post){
+		$listo = array();
+		foreach ($this->model as $k => $modelo) {
+			$listo[$k] = $modelo->prepararDato($k,$post[$k]);
+		}
+		print_r($listo);
+		exit();
+		return $listo;
 	}
 }
 
 
 class ModeloPadre{
 	protected $table;
+	protected $db;
 	public function __construct(){
+		global $db;
+		$this->db = $db;
 		$this->table = get_class($this);
 	}
 	public function saveData($data){
@@ -79,28 +114,22 @@ class ModeloPadre{
 			}
 		}else
 			$mensajes[] = "erro de validacion, implementar algo bonito o con mas info";			
-		#ejecuto el sql de alguna manera
-		echo $sql;
+
+		$this->db->sql($sql);
 		#si hay alguno problema se agregan mensajes al array de retorno
 		return $mensajes;
 	}
 	public function getRows(){
-		//aca se hace el sql
 		$sql = "select * from " . $this->table;
+		$query = $this->db->sql($sql);
 
-		//se retorna una matriz con los datos ()
-		return array(
-			array(
-				'id' => 1,
-				'campo1' => 'Juan',
-				'campo2' => 'Perez'
-			),
-			array(
-				'id' => 2,
-				'campo1' => 'Carlos',
-				'campo2' => 'Cruz'
-			)
-		);
+		return $this->db->fetch($query);
+	}
+	public function getById($index){
+		$sql = "select * from " . $this->table  . " where id=" . $index;
+		$query = $this->db->sql($sql);
+		$data = $this->db->fetch($query);
+		return $data[0];
 	}
 	public function validar($data){
 		return true;
@@ -121,7 +150,7 @@ class SqlHelper{
 	public static function createUpdate($table, $data, $where){
 		$update = array();
 		foreach($data as $k => $v){
-			$update[] = ($k . '=' . $this->quote($v));
+			$update[] = ($k . '=' . self::quote($v));
 		}
 		return "update $table set " . join(',',$update) . " where $where";
 	}

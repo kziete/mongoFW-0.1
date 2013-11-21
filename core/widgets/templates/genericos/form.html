@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
 	{{#campos}}
 		<label>{{nombre}}</label>
 		{{{input}}} <br>
 	{{/campos}}
 	<button type="submit" name="aceptar" value="1">Guardar</button>
 </form>
-</body>
-</html>

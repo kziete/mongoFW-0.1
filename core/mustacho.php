@@ -1,11 +1,13 @@
 <?php 
+require(BASE_DIR .'core/libs/mustache/src/Mustache/Autoloader.php');
+Mustache_Autoloader::register();
+
 class Mustacho{
 	public $templateDir = BASE_DIR;
 	public $mustache;
 
 	public function __construct($templateDir = false){
-		require(BASE_DIR .'core/mustache/src/Mustache/Autoloader.php');
-		Mustache_Autoloader::register();
+		
 		$this->mustache = new Mustache_Engine;
 		$this->templateDir .= $templateDir;
 	}
@@ -17,3 +19,6 @@ class Mustacho{
 		);
 	}
 }
+
+
+$mustacho = new Mustacho();

@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Mongo :B</title>
+    <link rel="stylesheet" type="text/css" href="/admin/assets/bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="/admin/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="/admin/assets/bootstrap/js/bootstrap.min.js"></script>
   </head>
   <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="#">Mongo</a>
+        <ul class="nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Link</a></li>
+          <li><a href="#">Link</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="container">
       <div class="row">
-        <div class="span3">
-          <ul>
-          {{#disponibles}}
-            <li><a href="/admin/autoadmin.php?modelo={{.}}">{{.}}</a></li>
-          {{/disponibles}}
-          </ul>
-        </div>
-        <div class="span9">
+        <div class="span12">
           {{{content}}}
         </div>
       </div>
