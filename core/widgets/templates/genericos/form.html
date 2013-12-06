@@ -1,7 +1,20 @@
-<form method="post" enctype="multipart/form-data">
+{{#includes}}
+	{{{.}}}
+{{/includes}}
+<form method="post" enctype="multipart/form-data" class="form-horizontal">
 	{{#campos}}
-		<label>{{nombre}}</label>
-		{{{input}}} <br>
+	<div class="control-group">
+		<label class="control-label">{{nombre}}</label>
+		<div class="controls">
+			{{{input}}}
+		</div>
+	</div>
 	{{/campos}}
-	<button type="submit" name="aceptar" value="1">Guardar</button>
+	<div class="control-group">
+		<label class="control-label"></label>
+		<div class="controls">
+			<a href="/admin/{{modelo}}" class="btn btn-warning">Cancelar</a>
+			<button type="submit" name="aceptar" value="1" class="btn btn-primary">Guardar</button>
+		</div>
+	</div>
 </form>

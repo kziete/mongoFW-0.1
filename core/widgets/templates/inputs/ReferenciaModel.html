@@ -1,0 +1,6 @@
+<select name="{{name}}">
+	<option>Seleccione</option>
+	{{#opciones}}
+		<option value="{{id}}" {{#selected}}selected=""{{/selected}}>{{label}}</option>
+	{{/opciones}}
+</select>

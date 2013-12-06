@@ -15,10 +15,4 @@ class TextModel extends WidgetPadre{
 		);	
 		return parent::input($hash);
 	}
-	public function getOutput($value){
-		return $value;
-	}
-	public function prepararDato($name,$value){
-		return $value;
-	}
 }

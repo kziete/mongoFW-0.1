@@ -1,18 +1,41 @@
-<table class="table">
-	<tr>
-		<th></th>
-		{{#cabecera}}
-			<th>{{.}}</th>
-		{{/cabecera}}
-	</tr>
-	{{#datos}}
-	<tr>
-		<td>
-			<a href="{{edit}}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
-		</td>
-		{{#outputs}}
-			<td>{{.}}</td>
-		{{/outputs}}
-	</tr>
-	{{/datos}}
-</table>
+<form method="get">
+	<table class="table table-bordered table-condensed table-striped table-hover">
+		<tr>
+			<th></th>
+			{{#cabecera}}
+				<th>
+					{{.}}
+				</th>
+			{{/cabecera}}
+		</tr>
+		<tr>
+			<td>
+				<button type="submit" class="btn btn-mini btn-info">
+					<i class="icon-search icon-white"></i>
+				</button>
+			</td>
+			{{#filtros}}
+			<td>{{{.}}}</td>
+			{{/filtros}}
+		</tr>
+		{{#datos}}
+		<tr>
+			<td>
+				<a href="{{edit}}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
+			</td>
+			{{#outputs}}
+				<td>{{.}}</td>
+			{{/outputs}}
+		</tr>
+		{{/datos}}
+	</table>
+</form>
+<div class="pagination">
+	<ul>
+		{{#nav}}
+			<li {{#actual}}class="active"{{/actual}}>
+				<a href="?p={{numero}}{{#url}}&{{url}}{{/url}}">{{numero}}</a>
+			</li>
+		{{/nav}}
+	</ul>
+</div>

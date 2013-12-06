@@ -13,11 +13,19 @@ class FileModel extends WidgetPadre{
 		);	
 		return parent::input($hash);
 	}
-	public function getOutput($value){
-		return $value;
-	}
 	public function prepararDato($name,$value){
-		print_r($_FILES);
-		return $value;
+		if(!$_FILES[$name]['name'])
+			return $value;
+
+		$file = $_FILES[$name];
+		$nombre = $nombreLimpio = $file['name'];
+		$path = BASE_DIR . 'public/archivos/' . $nombre;
+		while (file_exists($path)) {
+			$nombre = substr(md5(time()), 0,4) . '_' . $nombreLimpio;
+			$path = BASE_DIR . 'public/archivos/' . $nombre;
+		}
+
+		move_uploaded_file($file['tmp_name'], $path);
+		return $nombre;
 	}
 }
