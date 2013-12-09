@@ -21,7 +21,12 @@
 		{{#datos}}
 		<tr>
 			<td>
-				<a href="{{edit}}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
+				<a href="{{edit}}" class="btn btn-warning btn-mini">
+					<i class="icon-edit icon-white"></i>
+				</a>
+				<a href="{{edit}}?borrar=1" class="btn btn-danger btn-mini" onclick="return confirm('Seguro que desea Eliminar?')">
+					<i class="icon-remove icon-white"></i>
+				</a>
 			</td>
 			{{#outputs}}
 				<td>{{.}}</td>

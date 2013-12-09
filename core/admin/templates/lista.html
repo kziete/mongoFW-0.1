@@ -1,0 +1,16 @@
+<ul class="breadcrumb">
+	<li class="active">Admin</li>
+</ul>
+
+<div class="row-fluid">
+	<div class="span8">
+		<ul class="nav nav-tabs nav-stacked">
+			{{#disponibles}}
+				<li><a href="/admin/{{.}}">{{.}}</a></li>
+			{{/disponibles}}
+		</ul>
+	</div>
+	<div class="span4">
+		Alguna lista de algo útil acá
+	</div>
+</div>

@@ -122,6 +122,9 @@ class AdminPadre{
 }
 
 
+
+
+
 class ModeloPadre{
 	protected $table;
 	protected $db;
@@ -176,7 +179,12 @@ class ModeloPadre{
 		$data = $this->db->fetch($query);
 		return $data[0];
 	}
+	public function delete($index){
+		$sql = "delete from " . $this->table . " where id=" . $this->db->quote($index);
+		$query = $this->db->sql($sql);
+	}
 	public function validar($data){
+		//aca se debe llamar a los validadores de los widgets, para que no se inserte data mal formateada
 		return true;
 	}
 	public function getReferencias($data){

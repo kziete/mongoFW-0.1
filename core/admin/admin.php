@@ -7,7 +7,7 @@ class AdminVista extends Vista{
 		session_start();
 		//unset($_SESSION['login']);
 		parent::__construct();
-		$this->m->templateDir = BASE_DIR . 'public/admin_templates/';
+		$this->m->templateDir = BASE_DIR . 'core/admin/templates/';
 
 		$this->revisarPost();
 		if(!$_SESSION['login'])
@@ -69,7 +69,11 @@ class AdminForm extends AdminVista{
 		parent::__construct();
 	}
 	public function get($modelo,$index){
-		$a = new $modelo(); 
+		$a = new $modelo();
+		if($_REQUEST['borrar']){
+			$a->model->delete($index);
+			header("Location: /admin/" . $modelo);
+		}
 		$hash = array(
 			'modelo' => $modelo,			
 			'content' => $a->getForm($index)
