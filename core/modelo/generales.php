@@ -13,6 +13,12 @@ class Modelos{
 	public static function file($hash=null){
 		return new FileModel($hash);
 	}
+	public static function opcion($hash=null){
+		return new OpcionModel($hash);
+	}
+	public static function multiOpcion($hash=null){
+		return new MultiOpcionModel($hash);
+	}
 	public static function referencia($hash=null){
 		return new ReferenciaModel($hash);
 	}
@@ -23,6 +29,7 @@ class AdminPadre{
 	protected $adminName;
 	protected $mustacho;
 	protected $model;
+	protected $post = null;
 	
 	public function __construct(){		
 		global $mustacho;
@@ -30,13 +37,14 @@ class AdminPadre{
 		$this->adminName = get_class($this);
 		$this->model = new $this->modelName;
 	}
-	public function getForm($index){
+	public function getForm($index,$error=false){
 		if($index != -1){
 			$data =  $this->model->getById($index);
 			if(!$data)
 				echo 'Sacame de Aca';
 		}
-		
+		if($this->post != null)
+			$data = $this->post;
 		
 		$camposHtml = array();
 		$includes = array();
@@ -49,7 +57,8 @@ class AdminPadre{
 			}
 
 			$camposHtml[] = array(
-				'nombre' => $k,
+				'nombre' => $v->getNombre($k),
+				'error' => $v->error ? $v->error : '',
 				'input' => $v->getInput($k,$data[$k])
 			);
 		}
@@ -62,7 +71,8 @@ class AdminPadre{
 		$output = array(
 			'modelo' => $this->adminName,
 			'campos' => $camposHtml,
-			'includes' => $tmp
+			'includes' => $tmp,
+			'error' => $error
 		);
 		return $this->mustacho->render('genericos/form.html',$output);
 	}
@@ -80,22 +90,26 @@ class AdminPadre{
 			}
 		}
 		$filtros = array();
+		$cabecera = array();
 		foreach ($this->mostrar as $campo) {
 			$filtros[] = $this->model->{$campo}->getFilter($campo,$_GET['filtro'][$campo]);
+			$cabecera[] = $this->model->{$campo}->getNombre($campo);
 		}
-
 		$output = array(
-			'cabecera' => $this->mostrar,
+			'modelo' => $this->adminName,
+			'cabecera' => $cabecera,
 			'filtros' => $filtros,
 			'datos' => $ordenado,
 			'nav' => $paged['nav'],
-			'url' => $paged['url']
+			'url' => $paged['url'],
+			'bloqueado' => $this->bloqueado
 		);
 		return $this->mustacho->render('genericos/grid.html',$output);
 	}
 	public function save($index){		
 		if($_POST['aceptar']){
 			unset($_POST['aceptar']);
+			$this->post = $_POST;
 			$grabar = $this->prepararDatos($_POST);
 
 			if($index != -1)
@@ -104,6 +118,8 @@ class AdminPadre{
 			$errores = $this->model->saveData($grabar);
 			if(!$errores)
 				$this->saveOk();
+			else
+				return false;
 		}
 	}
 	public function saveOk(){
@@ -141,11 +157,10 @@ class ModeloPadre{
 			}else{
 				$sql = SqlHelper::createInsert($this->table, $data);
 			}
+			$this->db->sql($sql);
 		}else
-			$mensajes[] = "error de válidacion, implementar algo bonito o con mas info";			
+			$mensajes = "error de válidacion, implementar algo bonito o con mas info";			
 
-		$this->db->sql($sql);
-		#si hay alguno problema se agregan mensajes al array de retorno
 		return $mensajes;
 	}
 	public function getRows(){
@@ -179,13 +194,27 @@ class ModeloPadre{
 		$data = $this->db->fetch($query);
 		return $data[0];
 	}
+	public function getByFilter($filtros){
+		$tmp = array();
+		foreach ($filtros as $k => $v) {
+			$tmp[] = "$k='$v'";
+		}
+		$sql = "select * from " . $this->table  . " where " . join(' and ', $tmp);
+		$query = $this->db->sql($sql);
+		return $this->db->fetch($query);
+	}
 	public function delete($index){
 		$sql = "delete from " . $this->table . " where id=" . $this->db->quote($index);
 		$query = $this->db->sql($sql);
 	}
 	public function validar($data){
-		//aca se debe llamar a los validadores de los widgets, para que no se inserte data mal formateada
-		return true;
+		$ok = true;
+		foreach ($this as $k => $v) {
+			if(isset($data[$k]) && is_object($v) && method_exists($v, 'validar'))
+				if(!$v->validar($data[$k]))
+					$ok = false;
+		}
+		return $ok;
 	}
 	public function getReferencias($data){
 		if(empty($data))

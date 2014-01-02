@@ -1,0 +1,16 @@
+{{^usarSelect}}
+	{{#opciones}}
+	<label class="radio">
+		<input type="radio" name="{{name}}" value="{{value}}" {{#checked}}checked=""{{/checked}}>
+		{{label}}
+	</label>
+	{{/opciones}}
+{{/usarSelect}}
+
+{{#usarSelect}}
+	<select name="{{name}}">
+		{{#opciones}}
+			<option value="{{value}}" {{#checked}}selected=""{{/checked}}>{{label}}</option>
+		{{/opciones}}
+	</select>
+{{/usarSelect}}

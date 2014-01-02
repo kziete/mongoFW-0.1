@@ -1,0 +1,16 @@
+{{^usarSelect}}
+	{{#opciones}}
+	<label class="checkbox">
+		<input type="checkbox" name="{{name}}[]" value="{{value}}" {{#checked}}checked=""{{/checked}}>
+		{{label}}
+	</label>
+	{{/opciones}}
+{{/usarSelect}}
+
+{{#usarSelect}}
+	<select name="{{name}}[]" size="{{size}}" multiple="">
+		{{#opciones}}
+			<option value="{{value}}" {{#checked}}selected=""{{/checked}}>{{label}}</option>
+		{{/opciones}}
+	</select>
+{{/usarSelect}}

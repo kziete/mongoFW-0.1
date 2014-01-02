@@ -2,11 +2,20 @@
 	{{{.}}}
 {{/includes}}
 <form method="post" enctype="multipart/form-data" class="form-horizontal">
+	{{#error}}
+	<div class="alert alert-danger">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>Error!</strong> Por favor, corrija los siguientes errores.
+	</div>
+	{{/error}}
 	{{#campos}}
-	<div class="control-group">
+	<div class="control-group {{#error}}error{{/error}}">
 		<label class="control-label">{{nombre}}</label>
 		<div class="controls">
 			{{{input}}}
+			{{#error}}
+				<span class="help-inline">{{error}}</span>
+			{{/error}}
 		</div>
 	</div>
 	{{/campos}}

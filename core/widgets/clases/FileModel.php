@@ -18,7 +18,7 @@ class FileModel extends WidgetPadre{
 			return $value;
 
 		$file = $_FILES[$name];
-		$nombre = $nombreLimpio = $file['name'];
+		$nombre = $nombreLimpio = str_replace(' ', '-', $file['name']);
 		$path = BASE_DIR . 'public/archivos/' . $nombre;
 		while (file_exists($path)) {
 			$nombre = substr(md5(time()), 0,4) . '_' . $nombreLimpio;

@@ -1,12 +1,16 @@
 <?php 
 
+/**
+* el $hash usa:
+* @param model String con el nombre de la tabla a referenciar
+* @param label String con el campo de la tabla a usar como Label
+*/
+
 class ReferenciaModel extends WidgetPadre{
-	public $max_length;
 	public function __construct($hash){
 		parent::__construct($hash);
 		$this->model = new $hash['model']();
 		$this->label = $hash['label'];
-		$this->max_length = $hash['max_length'] ? $hash['max_length'] : 128;
 	}
 	public function getInput($campo=null,$value=null){
 		$rows = $this->model->getRows();

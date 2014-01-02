@@ -1,36 +1,41 @@
 <form method="get">
 	<table class="table table-bordered table-condensed table-striped table-hover">
 		<tr>
-			<th></th>
 			{{#cabecera}}
 				<th>
 					{{.}}
 				</th>
 			{{/cabecera}}
+			<th></th>
 		</tr>
 		<tr>
+			{{#filtros}}
+			<td>{{{.}}}</td>
+			{{/filtros}}
 			<td>
 				<button type="submit" class="btn btn-mini btn-info">
 					<i class="icon-search icon-white"></i>
 				</button>
+				<a href="/admin/{{modelo}}" class="btn btn-mini">
+					<i class="icon-refresh"></i>
+				</a>
 			</td>
-			{{#filtros}}
-			<td>{{{.}}}</td>
-			{{/filtros}}
 		</tr>
 		{{#datos}}
 		<tr>
+			{{#outputs}}
+				<td>{{.}}</td>
+			{{/outputs}}
 			<td>
 				<a href="{{edit}}" class="btn btn-warning btn-mini">
 					<i class="icon-edit icon-white"></i>
 				</a>
+				{{^bloqueado}}
 				<a href="{{edit}}?borrar=1" class="btn btn-danger btn-mini" onclick="return confirm('Seguro que desea Eliminar?')">
 					<i class="icon-remove icon-white"></i>
 				</a>
+				{{/bloqueado}}
 			</td>
-			{{#outputs}}
-				<td>{{.}}</td>
-			{{/outputs}}
 		</tr>
 		{{/datos}}
 	</table>

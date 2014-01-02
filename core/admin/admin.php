@@ -55,10 +55,11 @@ class AdminLista extends AdminVista{
 		parent::__construct();
 	}
 	public function get($modelo){
-		$a = new $modelo(); 
+		$a = new $modelo();
 		$hash = array(
 			'modelo' => $modelo,
-			'content' => $a->getGrid()
+			'content' => $a->getGrid(),
+			'bloqueado' => $a->bloqueado
 		);
 		$this->armar('cascara_grid.html', $hash);
 	}
@@ -81,8 +82,15 @@ class AdminForm extends AdminVista{
 		//$this->mostrar('contenedor.html',$hash);
 		$this->armar('cascara_form.html', $hash);
 	}
+
 	public function post($modelo,$index){
 		$a = new $modelo(); 
-		$a->save($index);
+		if(!$a->save($index)){
+			$hash = array(
+				'modelo' => $modelo,			
+				'content' => $a->getForm($index,true)
+			);
+			$this->armar('cascara_form.html', $hash);
+		}		
 	}
 }
