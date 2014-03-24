@@ -1,51 +1,68 @@
-<form method="get">
-	<table class="table table-bordered table-condensed table-striped table-hover">
-		<tr>
-			{{#cabecera}}
-				<th>
-					{{.}}
-				</th>
-			{{/cabecera}}
-			<th></th>
-		</tr>
-		<tr>
-			{{#filtros}}
-			<td>{{{.}}}</td>
-			{{/filtros}}
-			<td>
-				<button type="submit" class="btn btn-mini btn-info">
-					<i class="icon-search icon-white"></i>
-				</button>
-				<a href="/admin/{{modelo}}" class="btn btn-mini">
-					<i class="icon-refresh"></i>
-				</a>
+<div class="contenedor_tabla">
+	{{#nav_flag}}
+	<div class="pagination">
+		<ul>
+			{{#nav}}
+				<li {{#actual}}class="active"{{/actual}}>
+					<a href="?p={{numero}}{{#url}}&{{url}}{{/url}}">{{numero}}</a>
+				</li>
+			{{/nav}}
+		</ul>
+	</div>
+	{{/nav_flag}}
+	<form method="get">
+	
+		<table class="table table-bordered table-condensed table-striped table-hover tabla_grilla">
+			<tr class="cabecera_tabla">
+				{{#cabecera}}
+					<th>
+						{{.}}
+					</th>
+				{{/cabecera}}
+				<th></th>
+			</tr>
+			<tr class="filtros">
+				{{#filtros}}
+				<td>{{{.}}}</td>
+				{{/filtros}}
+				<td class="td_refre">
+					<a href="/admin/{{modelo}}" class="btn btn_refrescar">
+						<i class="fa fa-refresh"></i> 
+					</a>
+
+					<button type="submit" class="btn btn-mini btn-oculto">
+						
+					</button>
 			</td>
-		</tr>
-		{{#datos}}
-		<tr>
-			{{#outputs}}
-				<td>{{.}}</td>
-			{{/outputs}}
-			<td>
-				<a href="{{edit}}" class="btn btn-warning btn-mini">
-					<i class="icon-edit icon-white"></i>
-				</a>
-				{{^bloqueado}}
-				<a href="{{edit}}?borrar=1" class="btn btn-danger btn-mini" onclick="return confirm('Seguro que desea Eliminar?')">
-					<i class="icon-remove icon-white"></i>
-				</a>
-				{{/bloqueado}}
-			</td>
-		</tr>
-		{{/datos}}
-	</table>
-</form>
-<div class="pagination">
-	<ul>
-		{{#nav}}
-			<li {{#actual}}class="active"{{/actual}}>
-				<a href="?p={{numero}}{{#url}}&{{url}}{{/url}}">{{numero}}</a>
-			</li>
-		{{/nav}}
-	</ul>
+			</tr>
+			{{#datos}}
+			<tr>
+				{{#outputs}}
+					<td>{{{.}}}</td>
+				{{/outputs}}
+				<td class="iconos_edit">
+					<a href="{{edit}}" class="btn_editar h100">
+						<i class="fa fa-pencil-square-o"></i>
+					</a>
+					{{^bloqueado}}
+					<a href="{{edit}}?borrar=1" class="btn_eliminar h100" onclick="return confirm('Seguro que desea Eliminar?')">
+						<i class="fa fa-times"></i>
+					</a>
+					{{/bloqueado}}
+				</td>
+			</tr>
+			{{/datos}}
+		</table>
+	</form>
+	{{#nav_flag}}
+	<div class="pagination">
+		<ul>
+			{{#nav}}
+				<li {{#actual}}class="active"{{/actual}}>
+					<a href="?p={{numero}}{{#url}}&{{url}}{{/url}}">{{numero}}</a>
+				</li>
+			{{/nav}}
+		</ul>
+	</div>
+	{{/nav_flag}}
 </div>

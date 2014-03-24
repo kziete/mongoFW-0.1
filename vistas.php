@@ -4,8 +4,8 @@ class Index extends Vista{
     	$hash = array(
     		'titulo' => 'Título'
     	);
-    	$tabla1 = new Tabla1();
-    	$data = $tabla1->getRows();
+    	#$tabla1 = new Tabla1();
+    	#$data = $tabla1->getRows();
     	//print_r($data);
         $this->armar('home.html',$hash);
     }

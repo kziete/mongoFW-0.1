@@ -52,4 +52,10 @@ class WidgetPadre{
 	public function getCondition($name,$search){
 		return $name . " like '%" . $search . "%'";
 	}
+	public function getFieldType(){
+		return "varchar(256)";
+	}
+	public function getAlters($name){
+		return false;
+	}
 }

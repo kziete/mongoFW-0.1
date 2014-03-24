@@ -1,16 +1,24 @@
 <ul class="breadcrumb">
+	<li class="pri">Te encuentras en: </li>
 	<li class="active">Admin</li>
 </ul>
 
 <div class="row-fluid">
-	<div class="span8">
-		<ul class="nav nav-tabs nav-stacked">
-			{{#disponibles}}
-				<li><a href="/admin/{{.}}">{{.}}</a></li>
-			{{/disponibles}}
+	<div class="span9">
+		{{#disponibles}}
+		<ul class="nav nav-list lista_categoria">
+			
+			<li class="nav-header">{{categoria}} </a></li>
+			{{#lista}}
+				<li>
+					<a href="/admin/{{adminName}}">{{modelName}}</a>
+					<a href="/admin/{{adminName}}/-1" class="edit_mas"><i class="fa fa-plus"></i></a>
+				</li>
+			{{/lista}}
+			
 		</ul>
+		{{/disponibles}}
 	</div>
-	<div class="span4">
-		Alguna lista de algo útil acá
-	</div>
+	 <div class="span3 visor_right"></div>
+	
 </div>

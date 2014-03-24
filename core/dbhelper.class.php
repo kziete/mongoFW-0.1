@@ -10,7 +10,8 @@ class DbHelper {
 
 		$this->ado = NewADOConnection('mysql');
 		$this->ado->Connect(HOST, USER, PASSWORD, DATABASE);
-		$this->ado->execute("SET NAMES utf8");
+		$this->ado->execute("SET NAMES utf8");		
+		$this->ado->SetFetchMode(ADODB_FETCH_ASSOC);
 	}
 
 	public function sql($sql){

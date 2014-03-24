@@ -4,26 +4,44 @@
     <meta charset="UTF-8">
     <title>Mongo :B</title>
     <link rel="stylesheet" type="text/css" href="/admin_assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin_assets/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/admin_assets/css/font-awesome.min.css">
     <script type="text/javascript" src="/admin_assets/js/jquery.js"></script>
     <script type="text/javascript" src="/admin_assets/bootstrap/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <div class="navbar">
-      <div class="navbar-inner">
-        <a class="brand" href="#">Mongo</a>
-        <ul class="nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Link</a></li>
-          <li><a href="#">Link</a></li>
-        </ul>
-      </div>
+  	<div class="wraper">
+	    <div class="navbar">
+	      <div class="navbar-inner">
+	        <a class="brand" href="#">Mongo</a>
+	        <h3 class="cliente">Cliente</h3>
+	        <!-- Listado de futuras funcionalidades <ul class="nav">
+	          <li class="active"><a href="#">Home</a></li>
+	          <li><a href="#">Link</a></li>
+	          <li><a href="#">Link</a></li>
+	        </ul>-->
+	        
+	        <ul class="nav pull-right">
+	          <li class="usuario"><span>Bienvenido</span> administrador</li>
+	          <li class="logout"><a href="?logout=1"><i class="fa fa-times"></i></a></li>
+	        </ul>
+	      </div>
+	    </div>
+	    <div class="contenedor_principal">
+	      <div class="row-fluid">
+	        <div class="span12">
+	          {{{content}}}
+	        </div>
+	       
+	      </div>
+	    </div> 
+	    <div class="push"></div>
+	</div>  
+    <div class="footer">
+	    <p>Mongo framework es un software libre, ocúpelo si puede © 2014</p>
+	    <div class="footer_logo"></div>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="span12">
-          {{{content}}}
-        </div>
-      </div>
-    </div>    
+    <script type="text/javascript" src="/admin_assets/js/responsive.js"></script>
   </body>
 </html>

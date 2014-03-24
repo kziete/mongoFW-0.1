@@ -22,11 +22,14 @@ class Modelos{
 	public static function referencia($hash=null){
 		return new ReferenciaModel($hash);
 	}
+	public static function referenciaMultiple($hash=null){
+		return new ReferenciaMultipleModel($hash);
+	}
 }
 
 
 class AdminPadre{
-	protected $adminName;
+	public $adminName;
 	protected $mustacho;
 	protected $model;
 	protected $post = null;
@@ -44,7 +47,7 @@ class AdminPadre{
 				echo 'Sacame de Aca';
 		}
 		if($this->post != null)
-			$data = $this->post;
+			$data = $this->prepararDatos($this->post);
 		
 		$camposHtml = array();
 		$includes = array();
@@ -101,6 +104,7 @@ class AdminPadre{
 			'filtros' => $filtros,
 			'datos' => $ordenado,
 			'nav' => $paged['nav'],
+			'nav_flag' => count($paged['nav']),
 			'url' => $paged['url'],
 			'bloqueado' => $this->bloqueado
 		);

@@ -17,4 +17,8 @@ class RichTextModel extends WidgetPadre{
 			'tinyjs' => '<script type="text/javascript" src="/admin_assets/tinymce/tinymce.min.js"></script>'
 		);
 	}
+	
+	public function getFieldType(){
+		return "text";
+	}
 }

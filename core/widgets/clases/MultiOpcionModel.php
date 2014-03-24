@@ -62,9 +62,3 @@ class MultiOpcionModel extends WidgetPadre{
 		return join('|',$value);
 	}
 }
-
-class MongoMisc{
-	public static function buscarConPipe($campo,$buscado){
-		return "($campo='$buscado' or $campo like '$buscado|%' or $campo like '%|$buscado|%' or $campo like '%|$buscado')";
-	}
-}

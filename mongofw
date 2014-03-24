@@ -1,0 +1,53 @@
+#!/usr/bin/php
+<?php
+#Script Helper de MongoFW 0.1v
+require 'config.php';
+require BASE_DIR . 'core/misc.class.php';
+
+
+if(!isset($argv[1]))
+	error("Debe especificar Una función");
+
+if(!function_exists($argv[1]))
+	error("No tenemos esa funcion :/");
+
+$argv[1]();
+
+
+
+#Metodos para la linea de comandos
+
+function sql(){
+	require BASE_DIR . 'core/modelo/modeloWrapper.php';
+
+	$clases = MongoMisc::file_get_php_classes('modelo.php');
+
+	$sql = '';
+	foreach ($clases as $v) {
+		$alters = array();
+		$c = new $v();
+		$sql .= "\nCREATE TABLE $v(\n";
+		$sql .= "\tid bigint primary key not null auto_increment";
+		foreach ($c as $k => $vv) {
+			$sql .= ",\n\t$k " . $vv->getFieldType();
+			if($vv->getAlters($k))
+				$alters[] = "ALTER TABLE $v " . $vv->getAlters($k);
+		}
+		$sql .= "\n)ENGINE=INNODB;\n";
+		if(!empty($alters))
+			$sql .= join("\n",$alters) . "\n";
+	}
+	echo $sql;
+}
+
+
+
+
+
+
+function error($mensaje){
+	echo "\n\n############ MongoHelper #######################\n";
+	echo "\t" . $mensaje . "\n";
+	echo "################################################\n\n";
+	exit();
+}
