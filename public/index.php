@@ -1,4 +1,5 @@
 <?php 
+header("X-Powered-By: Mongo Framework");
 require('../config.php');
 
 require(BASE_DIR . 'core/mustacho.class.php');
