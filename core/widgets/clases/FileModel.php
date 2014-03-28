@@ -19,6 +19,7 @@ class FileModel extends WidgetPadre{
 	public function prepararDato($name,$value){
 		if(!$_FILES[$name]['name'])
 			return $_POST['file_' . $name];
+		
 
 		$file = $_FILES[$name];
 		$nombre = $nombreLimpio = str_replace(' ', '-', $file['name']);
