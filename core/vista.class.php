@@ -13,6 +13,10 @@ class Vista{
 	public function mostrar($template,$hash){		
 		echo $this->m->render($template,$hash);
 	}
+	public function mostrarSinRender($template){
+		echo file_get_contents($this->m->templateDir .$template, FILE_USE_INCLUDE_PATH);
+	}
+
 	public function getModulo($template,$hash){		
 		return $this->m->render($template,$hash);		
 	}
