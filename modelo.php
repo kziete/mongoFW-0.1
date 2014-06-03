@@ -15,6 +15,7 @@ class Tabla1 extends ModeloPadre{
 			)
 		));
 		$this->campo4 = Modelos::tinymce(array('max_length' => 256));
+		$this->campo5 = Modelos::multiFile();
 		parent::__construct();
 	}
 }

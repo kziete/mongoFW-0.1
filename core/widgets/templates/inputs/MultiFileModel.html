@@ -1,0 +1,14 @@
+<input type="file" id="fileupload-{{name}}"  name="files[]" data-url="/admin_assets/jqueryupload/server/php/" multiple >
+<input name="{{name}}" type="hidden" id="hidden-{{name}}" value="{{value}}">
+<div class="progress progress-striped active hide" id="bar-{{name}}" >
+	<div class="bar"></div>
+</div>
+
+<div id="contenedor-{{name}}">
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	new MultiFile('{{name}}');
+});
+</script>

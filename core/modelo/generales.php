@@ -13,6 +13,9 @@ class Modelos{
 	public static function file($hash=null){
 		return new FileModel($hash);
 	}
+	public static function multiFile($hash=null){
+		return new MultiFileModel($hash);
+	}
 	public static function opcion($hash=null){
 		return new OpcionModel($hash);
 	}
