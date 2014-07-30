@@ -5,6 +5,7 @@ if(!file_exists(BASE_DIR . 'modelo.php')){
 }
 
 require(BASE_DIR . 'core/modelo/generales.php');
+require(BASE_DIR . 'core/modelo/modeloPadre.class.php');
 require(BASE_DIR . 'core/widgets/widgetPadre.php');
 
 

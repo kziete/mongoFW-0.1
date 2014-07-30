@@ -13,8 +13,8 @@ class FileModel extends WidgetPadre{
 		);	
 		return parent::input($hash);
 	}
-	public function getOutput($value){
-		return '<a href="/archivos/' . $value . '" target="_blank">' . $value . '<a/>';
+	public function getOutput($fila,$name){
+		return '<a href="/archivos/' . $fila[$value] . '" target="_blank">' . $fila[$value] . '<a/>';
 	}
 	public function prepararDato($name,$value){
 		if(!$_FILES[$name]['name'])

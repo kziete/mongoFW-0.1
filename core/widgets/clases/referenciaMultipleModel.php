@@ -36,8 +36,8 @@ class ReferenciaMultipleModel extends WidgetPadre{
 		return parent::input($hash);
 	}
 
-	public function getOutput($value){
-
+	public function getOutput($fila,$name){
+		$value = $fila[$name];
 		if($value){
 
 			$seleccionados = explode('|',$value);

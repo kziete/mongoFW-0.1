@@ -11,6 +11,7 @@ class Admin extends AdminVista{
 		$tmp = array();
 		foreach ($registradas as $k => $v) {
 			$obj = new $v;
+
 			if($obj->categoria)
 				$tmp[$obj->categoria][] = $obj;
 			else
@@ -40,7 +41,8 @@ class AdminLista extends AdminVista{
 		$hash = array(
 			'modelo' => $modelo,
 			'content' => $a->getGrid(),
-			'bloqueado' => $a->bloqueado
+			'bloqueado' => $a->bloqueado,
+			'nombre' => $a->nombre
 		);
 		$this->armar('cascara_grid.html', $hash);
 	}
@@ -58,7 +60,8 @@ class AdminForm extends AdminVista{
 		}
 		$hash = array(
 			'modelo' => $modelo,			
-			'content' => $a->getForm($index)
+			'content' => $a->getForm($index),
+			'nombre' => $a->nombre
 		);
 		//$this->mostrar('contenedor.html',$hash);
 		$this->armar('cascara_form.html', $hash);

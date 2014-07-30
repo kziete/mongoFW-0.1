@@ -21,8 +21,8 @@ class WidgetPadre{
 	public function input($hash){
 		return $this->mustacho->render( $this->inputTemplate, $hash);
 	}	
-	public function getOutput($value){
-		return $value;
+	public function getOutput($fila,$name){
+		return $fila[$name];
 	}
 	public function validar($value){
 		if($this->hash['notnull'] && $value ==''){

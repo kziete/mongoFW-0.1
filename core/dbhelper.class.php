@@ -14,8 +14,8 @@ class DbHelper {
 		$this->ado->SetFetchMode(ADODB_FETCH_ASSOC);
 	}
 
-	public function sql($sql){
-		return $this->ado->Execute($sql);
+	public function sql($sql,$args=array()){
+		return $this->ado->Execute($sql,$args);
 	}
 
 	public function fetch($query){

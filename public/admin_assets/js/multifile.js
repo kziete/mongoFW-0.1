@@ -70,7 +70,7 @@ var MultiFile = function(name){
 	self.getHtml = function(data){
 
 		var html = '<div id="id-' + MD5(data.nombre) + '">';
-		html +=	'	<h4 class="pull-left">' + data.nombre + '</h4>';
+		html +=	'	<a href="/archivos/' + data.nombre + '" target="_blank" class="pull-left">' + data.nombre + '</a>';
 		html +=	'	<a href="#" class="btn-remove btn btn-warning btn-small pull-right">';
 		html +=	'		<i class="icon-remove icon-white"></i>';
 		html +=	'	</a>';

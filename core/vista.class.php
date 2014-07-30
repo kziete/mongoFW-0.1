@@ -2,7 +2,11 @@
 
 class Vista{
 	protected $m;
+	protected $db;
 	public function __construct(){
+		
+		global $db;
+		$this->db = $db;
 		$this->m = new Mustacho();
 		$this->m->templateDir .= 'templates/';
 	}

@@ -29,8 +29,8 @@ class OpcionModel extends WidgetPadre{
 		return parent::input($hash);
 	}
 
-	public function getOutput($value){
-		return $this->opciones[$value];
+	public function getOutput($fila,$name){
+		return $this->opciones[$fila[$name]];
 	}
 	
 	public function getFilter($name,$search){

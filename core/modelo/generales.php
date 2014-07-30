@@ -7,6 +7,9 @@ class Modelos{
 	public static function text($hash=null){
 		return new TextModel($hash);
 	}
+	public static function textarea($hash=null){
+		return new TextAreaModel($hash);
+	}
 	public static function tinymce($hash=null){
 		return new RichTextModel($hash);
 	}
@@ -15,6 +18,9 @@ class Modelos{
 	}
 	public static function multiFile($hash=null){
 		return new MultiFileModel($hash);
+	}
+	public static function grid($hash=null){
+		return new GridModel($hash);
 	}
 	public static function opcion($hash=null){
 		return new OpcionModel($hash);
@@ -42,6 +48,7 @@ class AdminPadre{
 		$this->mustacho = $mustacho;
 		$this->adminName = get_class($this);
 		$this->model = new $this->modelName;
+		$this->nombre = $this->nombre ? $this->nombre : $this->modelName;
 	}
 	public function getForm($index,$error=false){
 		if($index != -1){
@@ -54,9 +61,12 @@ class AdminPadre{
 		
 		$camposHtml = array();
 		$includes = array();
+		
+		#$this->model->setIterable(false);
 
-		foreach ($this->model as $k => $v) {
+		//print_r(get_object_vars($this->model));
 
+		foreach (get_object_vars($this->model) as $k => $v) {
 			$tmp = $v->getIncludes();
 			foreach ($tmp as $kk => $vv) {
 				$includes[$kk] = $vv;
@@ -91,7 +101,7 @@ class AdminPadre{
 		foreach ($data as $k => $fila) {
 			$ordenado[$k]['edit'] = '/admin/' . $this->adminName . '/' . $fila['id'];
 			foreach ($this->mostrar as $campo) {
-				$ordenado[$k]['outputs'][] = $this->model->{$campo}->getOutput($fila[$campo]);
+				$ordenado[$k]['outputs'][] = $this->model->{$campo}->getOutput($fila,$campo);
 				$filtros[] = $this->model->{$campo}->getFilter($campo,$_GET['filtro'][$campo]);
 			}
 		}
@@ -118,7 +128,7 @@ class AdminPadre{
 			unset($_POST['aceptar']);
 			$this->post = $_POST;
 			$grabar = $this->prepararDatos($_POST);
-
+			
 			if($index != -1)
 				$grabar['id'] = $index;
 
@@ -135,7 +145,7 @@ class AdminPadre{
 
 	public function prepararDatos($post){
 		$listo = array();
-		foreach ($this->model as $k => $modelo) {
+		foreach (get_object_vars($this->model) as $k => $modelo) {
 			$listo[$k] = $modelo->prepararDato($k,$post[$k]);
 		}
 		/*print_r($listo);
@@ -145,120 +155,6 @@ class AdminPadre{
 }
 
 
-
-
-
-class ModeloPadre{
-	protected $table;
-	protected $db;
-	public function __construct(){
-		global $db;
-		$this->db = $db;
-		$this->table = get_class($this);
-	}
-	public function saveData($data){
-		$mensajes = false;
-		if($this->validar($data)){
-			if($data['id']){
-				$sql = SqlHelper::createUpdate($this->table, $data, "id =" . $data['id']);
-			}else{
-				$sql = SqlHelper::createInsert($this->table, $data);
-			}
-			$this->db->sql($sql);
-		}else
-			$mensajes = "error de válidacion, implementar algo bonito o con mas info";			
-
-		return $mensajes;
-	}
-	public function getRows(){
-		$sql = "select * from " . $this->table;
-		$query = $this->db->sql($sql);
-
-		return $this->db->fetch($query);
-	}
-	public function getRowsPaged($pagina){
-		$pagina = $pagina ? $pagina : 1;
-		$porpagina = 20;
-		$sql = "select * from " . $this->table;
-		$filtros = $_GET['filtro'];
-		if(!empty($filtros)){
-
-			$lista = array();
-			foreach ($this as $k => $v) {
-				if(in_array($k, array_keys($filtros)) && $filtros[$k])
-					$lista[] = $v->getCondition($k,$filtros[$k]);
-			}
-
-			$where = join(' and ', $lista);
-			if(!empty($lista))
-				$sql .= ' where ' . $where;
-		}
-		return $this->db->sqlPaginado($sql,$pagina,$porpagina);
-	}
-	public function getById($index){
-		$sql = "select * from " . $this->table  . " where id=" . $index;
-		$query = $this->db->sql($sql);
-		$data = $this->db->fetch($query);
-		return $data[0];
-	}
-	public function getByFilter($filtros){
-		$tmp = array();
-		foreach ($filtros as $k => $v) {
-			$tmp[] = "$k='$v'";
-		}
-		$sql = "select * from " . $this->table  . " where " . join(' and ', $tmp);
-		$query = $this->db->sql($sql);
-		return $this->db->fetch($query);
-	}
-	public function delete($index){
-		$sql = "delete from " . $this->table . " where id=" . $this->db->quote($index);
-		$query = $this->db->sql($sql);
-	}
-	public function validar($data){
-		$ok = true;
-		foreach ($this as $k => $v) {
-			if(isset($data[$k]) && is_object($v) && method_exists($v, 'validar'))
-				if(!$v->validar($data[$k]))
-					$ok = false;
-		}
-		return $ok;
-	}
-	public function getReferencias($data){
-		if(empty($data))
-			return $data;
-		$buscar = array();
-		foreach ($this as $k => $v) {
-			if(is_object($v))
-				//a futuro poner mas Tipos de modelos que necesiten la misma referenciacion
-				if(in_array(get_class($v), array('ReferenciaModel'))){
-					$buscar[$k] = array(
-						'modelo' => $v->model->table,
-						'label' => $v->label,
-						'aBuscar' => array()
-					);
-				}
-		}
-		foreach ($data as $k => $v) {
-			foreach ($buscar as $kk => $vv) {
-				if(!in_array($v[$k], $buscar[$kk]['aBuscar']))
-					$buscar[$kk]['aBuscar'][] = $v[$kk];
-			}
-		}
-		foreach ($buscar as $fk_name => $v) {
-			$query = $this->db->sql("select id," . $v['label'] . " from " . $v['modelo'] . " where id in(" . join(',', $v['aBuscar']) . ")");
-			$tmp = $this->db->fetch($query);
-			foreach ($tmp as $kk => $vv) {
-				$lista[$vv['id']] = $vv[$v['label']];
-			}
-
-			foreach ($data as $llave => $info) {
-				$data[$llave][$fk_name] = $lista[$info[$fk_name]];
-			}
-			
-		}
-		return $data;
-	}
-}
 
 
 class SqlHelper{
@@ -281,4 +177,54 @@ class SqlHelper{
 	public static function quote($string){
 		return "'" . str_replace("'","''",$string) . "'"; 
 	}
+}
+
+
+class MyIterator implements Iterator
+{
+    private $var = array();
+    
+    public function __construct($array)
+    {
+        //if (is_array($array)) {
+            $this->var = $array;
+        //}
+
+    }
+
+    public function rewind()
+    {
+        #echo "rewinding\n";
+        reset($this->var);
+    }
+
+    public function current()
+    {
+        $var = current($this->var);
+        #echo "current: $var\n";
+        return $var;
+    }
+
+    public function key()
+    {
+        $var = key($this->var);
+        #echo "key: $var\n";
+        return $var;
+    }
+
+    public function next()
+    {
+        $var = next($this->var);
+        #echo "next: $var\n";
+        return $var;
+    }
+
+    public function valid()
+    {
+        $key = key($this->var);
+        $var = ($key !== NULL && $key !== FALSE);
+        #echo "valid: $var\n";
+        return $var;
+    }
+
 }

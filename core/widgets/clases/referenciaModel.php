@@ -57,4 +57,7 @@ class ReferenciaModel extends WidgetPadre{
 			.  $this->hash['model'] 
 			. "(id) on delete cascade on update cascade;";
 	}
+	public function getOutput($fila,$name){
+		return $fila[$name.'_ref'];
+	}
 }
