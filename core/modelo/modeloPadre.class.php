@@ -31,18 +31,18 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 	}
 
 	public function offsetSet($offset, $value) {
-        if (is_null($offset)) {
-            $this->data[] = $value;
-        } else {
-            $this->data[$offset] = $value;
-        }
-    }
-    public function offsetExists($offset) {
-        return isset($this->data[$offset]);
-    }
-    public function offsetUnset($offset) {
-        unset($this->data[$offset]);
-    }
+		if (is_null($offset)) {
+			$this->data[] = $value;
+		} else {
+			$this->data[$offset] = $value;
+		}
+	}
+	public function offsetExists($offset) {
+		return isset($this->data[$offset]);
+	}
+	public function offsetUnset($offset) {
+		unset($this->data[$offset]);
+	}
 
 
 
@@ -143,8 +143,8 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		return $this->db->fetch($query);
 	}
 	public function delete($index){
-		$sql = "delete from " . $this->table . " where id=" . $this->db->quote($index);
-		$query = $this->db->sql($sql);
+		$sql = "delete from " . $this->table . " where id=?";
+		$query = $this->db->sql($sql,array($index));
 	}
 	public function validar($data){
 		$ok = true;

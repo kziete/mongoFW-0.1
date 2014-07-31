@@ -13,12 +13,12 @@ class Index extends Vista{
     	$data = $tabla1->getRows()->orderBy('id desc');#->rawData();#->filter(array('campo1' => 12345));
     	echo "debug\n";
     	
-    	/*foreach($data as $k => $v)    		
-    		print_r($v);*/
+    	foreach($data as $k => $v)    		
+    		print_r($v);
     	
 
-    	print_r($data[1]);
-        //$this->armar('home.html',$hash);
+    	#print_r($data[1]);
+        #$this->armar('home.html',$hash);
     }
 }
 
