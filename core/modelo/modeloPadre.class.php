@@ -149,9 +149,11 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 	public function validar($data){
 		$ok = true;
 		foreach (get_object_vars($this) as $k => $v) {
-			if(isset($data[$k]) && is_object($v) && method_exists($v, 'validar'))
+
+			if(/*isset($data[$k]) &&*/ is_object($v) && method_exists($v, 'validar')){
 				if(!$v->validar($data[$k]))
 					$ok = false;
+			}
 		}
 		return $ok;
 	}

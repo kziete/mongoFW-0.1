@@ -4,7 +4,8 @@
 class Tabla1 extends ModeloPadre{
 	public function __construct(){
 		$this->campo1 = Modelos::text(array(
-			'nombre' => 'Nombre Bonito'
+			'nombre' => 'Nombre Bonito',
+			'notnull' => true
 		));
 		$this->campo2 = Modelos::file();
 		$this->campo3 = Modelos::opcion(array(
@@ -12,7 +13,8 @@ class Tabla1 extends ModeloPadre{
 				'a' => 'Primera',
 				'b' => 'Segunda',
 				'c' => 'Tercera'
-			)
+			),
+			'notnull' => true
 		));
 		$this->campo4 = Modelos::tinymce(array('max_length' => 256));
 		$this->campo5 = Modelos::multiFile();
