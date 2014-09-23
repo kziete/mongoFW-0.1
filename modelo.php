@@ -36,8 +36,7 @@ class Tabla2 extends ModeloPadre{
 		));
 		$this->multiple_tabla1 = Modelos::referenciaMultiple(array(
 			'model' => 'Tabla1',
-			'label' => 'campo1',
-			'notnull' => true
+			'label' => 'campo1'
 		));
 		parent::__construct();
 	}

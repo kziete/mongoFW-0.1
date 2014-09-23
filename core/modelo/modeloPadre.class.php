@@ -148,7 +148,7 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 	}
 	public function validar($data){
 		$ok = true;
-		foreach ($this as $k => $v) {
+		foreach (get_object_vars($this) as $k => $v) {
 			if(isset($data[$k]) && is_object($v) && method_exists($v, 'validar'))
 				if(!$v->validar($data[$k]))
 					$ok = false;
@@ -159,7 +159,7 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		if(empty($data))
 			return $data;
 		$buscar = array();
-		foreach ($this as $k => $v) {
+		foreach (get_object_vars($this) as $k => $v) {
 			if(is_object($v))
 				//a futuro poner mas Tipos de modelos que necesiten la misma referenciacion
 				if(in_array(get_class($v), array('ReferenciaModel'))){
