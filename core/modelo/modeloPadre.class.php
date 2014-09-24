@@ -174,7 +174,7 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		}
 		foreach ($data as $k => $v) {
 			foreach ($buscar as $kk => $vv) {
-				if(!in_array($v[$k], $buscar[$kk]['aBuscar']))
+				if(!in_array($v[$kk], $buscar[$kk]['aBuscar']) && $v[$kk])
 					$buscar[$kk]['aBuscar'][] = $v[$kk];
 			}
 		}
