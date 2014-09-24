@@ -7,7 +7,9 @@ class Tabla1 extends ModeloPadre{
 			'nombre' => 'Nombre Bonito',
 			'notnull' => true
 		));
-		$this->campo2 = Modelos::file();
+		$this->campo2 = Modelos::file(array(
+			'folder' => 'mi_carpeta'
+		));
 		$this->campo3 = Modelos::opcion(array(
 			'opciones' => array(
 				'a' => 'Primera',
