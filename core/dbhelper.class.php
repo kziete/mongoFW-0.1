@@ -76,7 +76,11 @@ class DbHelper {
 				if($i == $pagina_actual)				
 					$tmp[$i-1]['actual'] = true;
 			}
-			$return['nav'] = $tmp;
+			$limpio = array();
+			foreach ($tmp as $v) {
+				$limpio[] = $v;
+			}
+			$return['nav'] = $limpio;
 		}
 
 
