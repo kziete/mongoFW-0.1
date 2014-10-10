@@ -34,6 +34,9 @@ class Modelos{
 	public static function referenciaMultiple($hash=null){
 		return new ReferenciaMultipleModel($hash);
 	}
+	public static function fecha($hash=null){
+		return new FechaModel($hash);
+	}
 }
 
 
