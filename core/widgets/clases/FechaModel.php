@@ -14,4 +14,7 @@ class FechaModel extends WidgetPadre{
 		);	
 		return parent::input($hash);
 	}
+	public function getFieldType(){
+		return 'date';
+	}
 }
