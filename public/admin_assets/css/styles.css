@@ -454,7 +454,7 @@ input:focus {
 }
 .tabla_grilla .iconos_edit {
 	padding: 0px !important;
-	
+	width: 110px;
 	
 }
 .tabla_grilla .iconos_edit a {
