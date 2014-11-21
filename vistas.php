@@ -33,6 +33,7 @@ class Probando extends Vista{
 
 class Error404{
 	function get(){
+		header("HTTP/1.0 404 Not Found");
 		echo "404";
 	}
 }
