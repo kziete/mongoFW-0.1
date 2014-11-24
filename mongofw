@@ -11,19 +11,23 @@ if(!isset($argv[1]))
 if(!function_exists($argv[1]))
 	error("No tenemos esa funcion :/");
 
-$argv[1]();
+$argv[1]($argv);
 
 
 
 #Metodos para la linea de comandos
 
-function sql(){
+function sql($argv){
+
 	require BASE_DIR . 'core/modelo/modeloWrapper.php';
 
 	$clases = MongoMisc::file_get_php_classes('modelo.php');
 
 	$sql = '';
 	foreach ($clases as $v) {
+		if($argv[2] && $argv[2] != $v)
+			continue;
+
 		$alters = array();
 		$c = new $v();
 		$sql .= "\nCREATE TABLE $v(\n";
