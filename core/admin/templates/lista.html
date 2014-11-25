@@ -12,7 +12,9 @@
 			{{#lista}}
 				<li>
 					<a href="/admin/{{adminName}}">{{nombre}}</a>
+					{{^bloqueado}}
 					<a href="/admin/{{adminName}}/-1" class="edit_mas"><i class="fa fa-plus"></i></a>
+					{{/bloqueado}}
 				</li>
 			{{/lista}}
 			
