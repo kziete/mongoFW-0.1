@@ -24,7 +24,7 @@ class WidgetPadre{
 	public function getOutput($fila,$name){
 		return $fila[$name];
 	}
-	public function validar($value){
+	public function validar($value,$name){
 		if($this->hash['notnull'] && $value ==''){
 			$this->error = "Este campo es obligatorio";
 			return false;
@@ -34,7 +34,7 @@ class WidgetPadre{
 				return false;
 
 		if(is_callable($this->hash['validar']))
-			if($this->error = $this->hash['validar']($value))
+			if($this->error = $this->hash['validar']($value,$name))
 				return false;
 
 

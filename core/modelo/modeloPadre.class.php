@@ -151,7 +151,7 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		foreach (get_object_vars($this) as $k => $v) {
 
 			if(array_key_exists($k,$data) && is_object($v) && method_exists($v, 'validar')){
-				if(!$v->validar($data[$k]))
+				if(!$v->validar($data[$k],$k))
 					$ok = false;
 			}
 		}

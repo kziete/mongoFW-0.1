@@ -16,6 +16,18 @@ class FileModel extends WidgetPadre{
 	public function getOutput($fila,$name){
 		return '<a href="/archivos/' . $fila[$value] . '" target="_blank">' . $fila[$value] . '<a/>';
 	}
+	public function validar($value,$name){
+		if($_FILES[$name]['error']){
+			$this->error = "Error en la subida del archivo";
+			return false;
+		}
+		if($this->hash['max_size'] && $this->hash['max_size'] < $_FILES[$name]['size']){
+			$this->error = "El tamaño del archivo excede el máximo permitido";
+			return false;			
+		}
+
+		return true;
+	}
 	public function prepararDato($name,$value){
 		if(!$_FILES[$name]['name'])
 			return $_POST['file_' . $name];
