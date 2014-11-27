@@ -44,6 +44,9 @@ class MultiFileModel extends WidgetPadre{
 		move_uploaded_file($file['tmp_name'], $path);
 		return $nombre;
 	}*/
+	public function getFieldType(){
+		return "text";
+	}
 }
 
 
