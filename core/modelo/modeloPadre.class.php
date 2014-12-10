@@ -116,7 +116,7 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		if(!empty($filtros)){
 
 			$lista = array();
-			foreach ($this as $k => $v) {
+			foreach (get_object_vars($this) as $k => $v) {
 				if(in_array($k, array_keys($filtros)) && $filtros[$k])
 					$lista[] = $v->getCondition($k,$filtros[$k]);
 			}
