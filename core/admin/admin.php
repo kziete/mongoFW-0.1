@@ -37,6 +37,10 @@ class AdminLista extends AdminVista{
 		parent::__construct();
 	}
 	public function get($modelo){
+		global $registradas;
+		if(!in_array($modelo, $registradas))
+			return;
+
 		$a = new $modelo();
 		$hash = array(
 			'modelo' => $modelo,
