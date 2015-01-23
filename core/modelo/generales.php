@@ -37,6 +37,9 @@ class Modelos{
 	public static function fecha($hash=null){
 		return new FechaModel($hash);
 	}
+	public static function fechayhora($hash=null){
+		return new FechaHoraModel($hash);
+	}
 }
 
 
