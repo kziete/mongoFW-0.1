@@ -17,7 +17,7 @@ class FileModel extends WidgetPadre{
 		return '<a href="/archivos/' . $fila[$value] . '" target="_blank">' . $fila[$value] . '<a/>';
 	}
 	public function validar($value,$name){
-		if($_FILES[$name]['error']){
+		if($_FILES[$name]['error'] && $_FILES[$name]['error'] != UPLOAD_ERR_NO_FILE){
 			$this->error = "Error en la subida del archivo";
 			return false;
 		}
